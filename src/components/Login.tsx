@@ -21,7 +21,7 @@ const Login = () => {
 
         localStorage.setItem("_uud", JSON.stringify(item))
         setEventLoad(false)
-        navigate('/blogs/all')
+        window.location.replace('/blogs/all')
     }
 
     //api call for logging in

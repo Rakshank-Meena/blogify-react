@@ -25,7 +25,7 @@ const Signup = () => {
         }
         localStorage.setItem("_uud", JSON.stringify(item))
         setEventLoad(false)
-        navigate('/blogs')
+        window.location.replace('/blogs/all')
     }
 
     const handleSubmit = async () => {
