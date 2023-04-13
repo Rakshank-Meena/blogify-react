@@ -6,15 +6,17 @@ const CreateBlog = () => {
     const navigate = useNavigate()
     const [blogTitle, setBlogTitle] = useState('')
     const [content, setContent] = useState('')
+    const [eventLoad, setEventLoad] = useState<boolean>(false)
     const payload = {
         title: blogTitle,
         content: content
     }
     const onSuccess = () => {
-        return (alert('blog posted successfully'), setBlogTitle(''), setContent(''), navigate("/blog/blogs"))
+        return (setEventLoad(false), alert('blog posted successfully'), setBlogTitle(''), setContent(''), navigate("/blog/blogs"))
     }
     const onFailure = (err: any) => {
-        alert(err)
+        setEventLoad(false)
+        return alert(err)
     }
 
     const handleFormSubmit = async () => {
@@ -23,15 +25,28 @@ const CreateBlog = () => {
         }
         else {
             if (blogTitle !== '' && content !== '') {
-                serverConn(onSuccess, onFailure, "post", `${process.env.REACT_APP_API_SERVER}/blogs`, {}, payload)
+                setEventLoad(true)
+                return serverConn(onSuccess, onFailure, "post", `${process.env.REACT_APP_API_SERVER}/blogs`, {}, payload)
             }
         }
     }
 
     return (
-        <>
+        <>{eventLoad && <div className='w-[97vw] capitalize mx-auto text-primary text-xl font-bold mb-8 mt-7 flex justify-center items-center space-x-3'>
+            please wait while we appreciate your creativity!!...<span className="text-base text-black">&#40; slow servers  😔 &#41;</span><span>
+                <svg
+                    className='animate-spin'
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    height="1.2em"
+                    width="1.2em"
+                >
+                    <path d="M12 22c5.421 0 10-4.579 10-10h-2c0 4.337-3.663 8-8 8s-8-3.663-8-8c0-4.336 3.663-8 8-8V2C6.579 2 2 6.58 2 12c0 5.421 4.579 10 10 10z" />
+                </svg>
+            </span>
+        </div>}
             <div className="container mx-auto mt-8">
-                <form onSubmit={handleFormSubmit} className="max-w-5xl mx-auto bg-white rounded-lg p-8">
+                <div className="max-w-5xl mx-auto bg-white rounded-lg p-8">
                     <h2 className="text-2xl font-bold mb-4">Create Blog</h2>
                     <div className="mb-4">
                         <label htmlFor="title" className="block font-bold mb-2">Title</label>
@@ -55,10 +70,10 @@ const CreateBlog = () => {
                             required
                         ></textarea>
                     </div>
-                    <button type="submit" className="w-full bg-primary text-white font-bold py-2 px-4 rounded-md hover:bg-link">
+                    <button onClick={handleFormSubmit} className="w-full bg-primary text-white font-bold py-2 px-4 rounded-md hover:bg-link">
                         Submit
                     </button>
-                </form>
+                </div>
             </div>
         </>
     )

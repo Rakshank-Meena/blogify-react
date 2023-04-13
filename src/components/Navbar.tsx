@@ -52,7 +52,7 @@ const Navbar = () => {
     const handleSignin = () => {
         setHamburger(false)
         if (localStorage.getItem("_uud")) {
-            return (localStorage.removeItem("_uud"), setSignupCta('sign in'))
+            return (localStorage.removeItem("_uud"), setSignupCta('sign in'),window.location.reload())
         }
         else {
             navigate("/auth/login")
