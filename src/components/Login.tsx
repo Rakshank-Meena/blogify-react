@@ -6,7 +6,7 @@ const Login = () => {
     const navigate = useNavigate()
     const [password, setPassword] = useState('')
     const [email, setEmail] = useState('')
-    const [eventLoad,setEventLoad]=useState<boolean>(false)
+    const [eventLoad, setEventLoad] = useState<boolean>(false)
     const data = {
         email: email,
         password: password
@@ -21,13 +21,13 @@ const Login = () => {
 
         localStorage.setItem("_uud", JSON.stringify(item))
         setEventLoad(false)
-        window.location.replace('/blogs/all')
+        window.location.assign('/blogs/all')
     }
 
     //api call for logging in
     const handleSubmit = async () => {
         setEventLoad(true)
-        return serverConn(onSuccess, (e: any) => { return(setEventLoad(false),alert('Error while trying to log you in')) }, "post", `${process.env.REACT_APP_API_SERVER}/login`, {}, data)
+        return serverConn(onSuccess, (e: any) => { return (setEventLoad(false), alert('Error while trying to log you in')) }, "post", `${process.env.REACT_APP_API_SERVER}/login`, {}, data)
     }
 
     useEffect(() => {
@@ -37,10 +37,10 @@ const Login = () => {
 
     return (
         <>
-            {eventLoad&&<div className='w-[97vw] capitalize mx-auto text-primary text-xl font-bold mb-8 mt-7 flex justify-center items-center space-x-3'>
+            {eventLoad && <div className='w-[97vw] capitalize mx-auto text-primary text-xl font-bold mb-8 mt-7 flex justify-center items-center space-x-3'>
                 logging you in,please wait...<span>
                     <svg
-                    className='animate-spin'
+                        className='animate-spin'
                         viewBox="0 0 24 24"
                         fill="currentColor"
                         height="1.2em"

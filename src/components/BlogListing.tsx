@@ -2,6 +2,7 @@ import React, { lazy, useEffect, useState } from 'react'
 import LazyLoader from './LazyLoader'
 import { useNavigate } from 'react-router-dom'
 import serverConn from '../api/ServerConn'
+import CustomButton from './CustomButton'
 const BlogList = lazy(() => import('./BlogList'))
 
 const BlogListing = (props: { email?: string }) => {
@@ -10,7 +11,7 @@ const BlogListing = (props: { email?: string }) => {
     const [blogs, setBlogs] = useState<any[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [param, setParams] = useState<any>({})
-    const [slow,setSlow]=useState<boolean>(false)
+    const [slow, setSlow] = useState<boolean>(false)
     const onSuccess = (data: any) => {
         setBlogs(data.data.data)
         setSlow(false)
@@ -22,7 +23,7 @@ const BlogListing = (props: { email?: string }) => {
         setLoading(false)
     }
     useEffect(() => {
-        setTimeout(()=>setSlow(true),4500)
+        setTimeout(() => setSlow(true), 4500)
         email ? setParams({
             email: email
         }) : setParams({})
@@ -34,7 +35,7 @@ const BlogListing = (props: { email?: string }) => {
         <>
             {loading ?
                 <>
-                    {slow&& <div className='w-auto capitalize mx-auto text-primary text-xl font-bold mb-8 mt-7 flex justify-center items-center space-x-3'>
+                    {slow && <div className='w-auto capitalize mx-auto text-primary text-xl font-bold mb-8 mt-7 flex justify-center items-center space-x-3'>
                         looks like servers are taking more time than usual 😔 <span>
                             <svg
                                 className='animate-spin'
@@ -57,8 +58,9 @@ const BlogListing = (props: { email?: string }) => {
                                 <BlogList author={item.userName} title={item.title} blogId={item.blogId} />
                             </div>
                         )
-                    }) : <div className='w-full animate-pulse h-screen text-2xl text-primary flex justify-center items-center'>
-                        Nothing to show here 😢
+                    }) : <div className='w-[95%] absolute left-[2.5%] h-[80%] text-2xl flex-col text-primary flex justify-center gap-10 items-center'>
+                        <span className='animate-pulse'>Nothing to show here 😢</span>
+                        <CustomButton classes={'animate-none'} type={'secondary'} text={'write a blog'} onClick={() => navigate('/create-blog')} />
                     </div>}
                 </div>
             }

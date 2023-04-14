@@ -10,7 +10,7 @@ const Signup = () => {
     const [email, setEmail] = useState('')
     const [userName, setUserName] = useState('')
 
-    const [eventLoad,setEventLoad]=useState<boolean>(false)
+    const [eventLoad, setEventLoad] = useState<boolean>(false)
     const data = {
         email: email,
         userName: userName,
@@ -25,12 +25,12 @@ const Signup = () => {
         }
         localStorage.setItem("_uud", JSON.stringify(item))
         setEventLoad(false)
-        window.location.replace('/blogs/all')
+        window.location.assign('/blogs/all')
     }
 
     const handleSubmit = async () => {
         setEventLoad(true)
-        return serverConn(onSuccess, (e: any) => { return(setEventLoad(false),alert('signup failed :(')) }, "post", `${process.env.REACT_APP_API_SERVER}/login`, {}, data)
+        return serverConn(onSuccess, (e: any) => { return (setEventLoad(false), alert('signup failed :(')) }, "post", `${process.env.REACT_APP_API_SERVER}/login`, {}, data)
     }
 
     useEffect(() => {
@@ -38,19 +38,19 @@ const Signup = () => {
     }, [])
 
     return (
-        <>{eventLoad&&<div className='w-[97vw] capitalize mx-auto text-primary text-xl font-bold mb-8 mt-7 flex justify-center items-center space-x-3'>
-        signing you up,please wait...<span>
-            <svg
-            className='animate-spin'
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                height="1.2em"
-                width="1.2em"
-            >
-                <path d="M12 22c5.421 0 10-4.579 10-10h-2c0 4.337-3.663 8-8 8s-8-3.663-8-8c0-4.336 3.663-8 8-8V2C6.579 2 2 6.58 2 12c0 5.421 4.579 10 10 10z" />
-            </svg>
-        </span>
-    </div>}
+        <>{eventLoad && <div className='w-[97vw] capitalize mx-auto text-primary text-xl font-bold mb-8 mt-7 flex justify-center items-center space-x-3'>
+            signing you up,please wait...<span>
+                <svg
+                    className='animate-spin'
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    height="1.2em"
+                    width="1.2em"
+                >
+                    <path d="M12 22c5.421 0 10-4.579 10-10h-2c0 4.337-3.663 8-8 8s-8-3.663-8-8c0-4.336 3.663-8 8-8V2C6.579 2 2 6.58 2 12c0 5.421 4.579 10 10 10z" />
+                </svg>
+            </span>
+        </div>}
             <div className="bg-white min-h-[90vh] h-full  flex items-center justify-center">
                 <div className="bg-white mx-2 w-full max-w-sm p-8 rounded-lg shadow-lg">
                     <h1 className="text-primary text-2xl font-bold mb-8 text-center">Sign Up</h1>

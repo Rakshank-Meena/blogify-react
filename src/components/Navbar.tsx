@@ -147,7 +147,7 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className="flex items-center justify-between  sticky top-0  bg-primary text-white p-4">
+            <nav className="flex items-center justify-between  sticky top-0 z-10 bg-primary text-white p-4">
                 <Link to={"/"} className="text-2xl font-bold">
                     Blogify
                 </Link>

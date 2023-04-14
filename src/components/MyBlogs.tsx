@@ -2,9 +2,12 @@
 import React, { lazy, useEffect, useState } from 'react'
 import LazyLoader from './LazyLoader'
 import serverConn from '../api/ServerConn'
+import CustomButton from './CustomButton'
+import { useNavigate } from 'react-router-dom'
 const BlogList = lazy(() => import('./BlogList'))
 
 const MyBlogs = (props: { email?: string }) => {
+    const navigate = useNavigate()
     const { email } = props
     const [blogs, setBlogs] = useState<any[]>([])
     const [loading, setLoading] = useState<boolean>(true)
@@ -12,20 +15,20 @@ const MyBlogs = (props: { email?: string }) => {
 
     const [slow, setSlow] = useState<boolean>(false)
     const onSuccess = (data: any) => {
-        
+
         setSlow(false)
         setBlogs(data.data.data)
         setLoading(false)
     }
     const onFailure = (data: any) => {
-        
+
         setSlow(false)
         console.log(data)
         setLoading(false)
     }
     useEffect(() => {
-        
-        setTimeout(()=>setSlow(true),4500)
+
+        setTimeout(() => setSlow(true), 4500)
         serverConn(onSuccess, onFailure, 'get', `${process.env.REACT_APP_API_SERVER}/my-blogs`, { email: email })
     }, [])
 
@@ -33,7 +36,7 @@ const MyBlogs = (props: { email?: string }) => {
         <>
             {loading ?
                 <>
-                    {slow && <div className='w-auto capitalize mx-auto text-primary text-xl font-bold mb-8 mt-7 flex justify-center items-center space-x-3'>
+                    {slow && <div className='w-auto capitalize mx-auto  text-primary text-xl font-bold mb-8 mt-7 flex justify-center items-center space-x-3'>
                         looks like servers are taking more time than usual 😔 <span>
                             <svg
                                 className='animate-spin'
@@ -48,7 +51,7 @@ const MyBlogs = (props: { email?: string }) => {
                     </div>}
                     <LazyLoader /></>
                 :
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 w-full mx-auto ">
+                <div className="grid grid-cols-1 min-h-screen lg:grid-cols-3 gap-4 w-full mx-auto ">
                     {blogs[0] ? blogs.map((item, index) => {
                         return (
                             <div className="my-3" key={`blogList${index}`}>
@@ -56,8 +59,9 @@ const MyBlogs = (props: { email?: string }) => {
                             </div>
                         )
                     }) : <>
-                        <div className='w-full animate-pulse h-screen text-2xl text-primary flex justify-center items-center'>
-                            Nothing to show here 😢
+                        <div className='w-[95%]  absolute left-[2.5%] h-[80%] text-2xl flex-col text-primary flex justify-center gap-10 items-center'>
+                            <span className='animate-pulse'>Nothing to show here 😢</span>
+                            <CustomButton classes={'animate-none'} type={'secondary'} text={'write a blog'} onClick={() => navigate('/create-blog')} />
                         </div>
                     </>}
                 </div>
