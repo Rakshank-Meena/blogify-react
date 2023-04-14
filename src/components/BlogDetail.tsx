@@ -39,11 +39,16 @@ const BlogDetail = (props: any) => {
 
     //function to comment on blogs
     const handleComment = async () => {
-        if (comment === "") {
-            return
+        if (localStorage.getItem("_uud") === null || localStorage.getItem("_uud") === undefined) {
+            navigate('/auth/login')
         }
-        const data = { blogId: props.blogs.blogId, email: props.blogs.email, type: "comment", comment }
-        serverConn((data: any) => { return (alert('comment posted successfully'), setEdit(true), setComment('')) }, (err: any) => { alert('failed') }, 'patch', `${process.env.REACT_APP_API_SERVER}/blogs`, {}, data)
+        else {
+            if (comment === "") {
+                return
+            }
+            const data = { blogId: props.blogs.blogId, email: props.blogs.email, type: "comment", comment }
+            serverConn((data: any) => { return (alert('comment posted successfully'), setEdit(true), setComment('')) }, (err: any) => { alert('failed') }, 'patch', `${process.env.REACT_APP_API_SERVER}/blogs`, {}, data)
+        }
     }
 
     //function to delete a blog

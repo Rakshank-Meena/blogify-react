@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import serverConn from "../api/ServerConn";
 
@@ -12,7 +12,7 @@ const CreateBlog = () => {
         content: content
     }
     const onSuccess = () => {
-        return (setEventLoad(false), alert('blog posted successfully'), setBlogTitle(''), setContent(''), navigate("/blog/blogs"))
+        return (setEventLoad(false), alert('blog posted successfully'), setBlogTitle(''), setContent(''), navigate("/blogs/my-blogs"))
     }
     const onFailure = (err: any) => {
         setEventLoad(false)
@@ -30,7 +30,9 @@ const CreateBlog = () => {
             }
         }
     }
-
+    useEffect(()=>{
+        window.scrollTo(0,0)
+    },[])
     return (
         <>{eventLoad && <div className='w-[97vw] capitalize mx-auto text-primary text-xl font-bold mb-8 mt-7 flex justify-center items-center space-x-3'>
             please wait while we appreciate your creativity!!...<span className="text-base text-black">&#40; slow servers  😔 &#41;</span><span>

@@ -1,7 +1,11 @@
 import { useNavigate } from "react-router-dom"
 import CustomButton from '../components/CustomButton'
+import { useEffect } from "react"
 const HomePage = () => {
     const navigate = useNavigate()
+    useEffect(()=>{
+        window.scrollTo(0,0)
+    },[])
     return (
         <>
             <div className='min-h-screen w-full bg-[#faf8f5]  h-auto'>

@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react"
+import React, { Suspense, lazy, useEffect } from "react"
 const Footer = lazy(()=>import("./Footer"))
 const Navbar = lazy(() => import("./Navbar"))
 const Layout = ({ children }: any) => {
